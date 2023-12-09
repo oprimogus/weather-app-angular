@@ -1,4 +1,4 @@
-import { Component, type OnDestroy, type OnInit } from '@angular/core'
+import { Component, type OnDestroy } from '@angular/core'
 import { WeatherService } from '../../services/weather.service'
 import { HttpClientModule } from '@angular/common/http'
 import { Weather } from '../../../../models/interfaces/Weather'
@@ -32,16 +32,12 @@ export class WeatherHomeComponent implements OnDestroy {
     private readonly weatherClient: WeatherService,
     private readonly snackBar: MatSnackBar) {}
 
-  // ngOnInit (): void {
-  //   this.getWeather(this.location)
-  // }
-
   getWeather (location: string): void {
     if (location === '') {
       this.snackBar.open(
         'Insira uma localização para buscar informações. Exemplo: "São Paulo"', 'Fechar', {
-        duration: 5000
-      })
+          duration: 5000
+        })
     }
     this.weatherClient.getWeather(location)
       .pipe(
@@ -54,8 +50,8 @@ export class WeatherHomeComponent implements OnDestroy {
         error: () => {
           this.snackBar.open(
             'Ocorreu um erro ao buscar dados do clima. Verifique a cidade escolhida ou tente novamente mais tarde.', 'Fechar', {
-            duration: 5000
-          })
+              duration: 5000
+            })
         }
       })
   }
