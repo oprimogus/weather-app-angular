@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "standard-with-typescript",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "object-curly-spacing": ["error", "always"], // Garantir espaçamento em importações: import { Foo } from "bar";
+        "semi": ["error", "never"], // Não usar ponto e vírgula, exceto quando necessário
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/consistent-type-imports": "off"
+    }
+}
