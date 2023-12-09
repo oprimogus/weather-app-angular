@@ -6,34 +6,44 @@ import { Subject, takeUntil } from 'rxjs'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FormsModule } from '@angular/forms'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { WheatherCardComponent } from '../../components/weather-card/weather-card.component'
+import { WeatherCardComponent } from '../../components/weather-card/weather-card.component'
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 
 @Component({
-  selector: 'app-wheater-home',
+  selector: 'app-weather-home',
   standalone: true,
   templateUrl: './weather-home.component.html',
   imports: [
     HttpClientModule,
     FormsModule,
     FontAwesomeModule,
-    WheatherCardComponent
+    WeatherCardComponent,
+    MatSnackBarModule
   ],
   providers: [WeatherService]
 })
-export class WheaterHomeComponent implements OnInit, OnDestroy {
+export class WeatherHomeComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>()
-  initialCity = 'Guaruja'
+  location = ''
   weatherData!: Weather
   searchIcon = faMagnifyingGlass
 
-  constructor (private readonly wheatherClient: WeatherService) {}
+  constructor (
+    private readonly weatherClient: WeatherService,
+    private readonly snackBar: MatSnackBar) {}
 
-  ngOnInit (): void {
-    this.getWheather(this.initialCity)
-  }
+  // ngOnInit (): void {
+  //   this.getWeather(this.location)
+  // }
 
-  getWheather (cityName: string): void {
-    this.wheatherClient.getWheather(cityName)
+  getWeather (location: string): void {
+    if (location === '') {
+      this.snackBar.open(
+        'Insira uma localização para buscar informações. Exemplo: "São Paulo"', 'Fechar', {
+        duration: 5000
+      })
+    }
+    this.weatherClient.getWeather(location)
       .pipe(
         takeUntil(this.destroy$)
       )
@@ -41,13 +51,18 @@ export class WheaterHomeComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.weatherData = response
         },
-        error: (error) => { console.log(error) }
+        error: () => {
+          this.snackBar.open(
+            'Ocorreu um erro ao buscar dados do clima. Verifique a cidade escolhida ou tente novamente mais tarde.', 'Fechar', {
+            duration: 5000
+          })
+        }
       })
   }
 
   onSubmit (): void {
-    this.getWheather(this.initialCity)
-    this.initialCity = ''
+    this.getWeather(this.location)
+    this.location = ''
   }
 
   ngOnDestroy (): void {

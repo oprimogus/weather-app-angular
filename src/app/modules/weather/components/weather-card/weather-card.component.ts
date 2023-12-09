@@ -10,7 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
   imports: [FontAwesomeModule, CommonModule],
   templateUrl: './weather-card.component.html'
 })
-export class WheatherCardComponent {
+export class WeatherCardComponent {
   @Input() weatherDataInput!: Weather
   minTemperatureIcon = faTemperatureLow
   maxTemperatureIcon = faTemperatureHigh

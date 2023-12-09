@@ -1,14 +1,21 @@
 @if(weatherDataInput) {
   <div class="container" *ngIf="weatherDataInput">
     <div class="upper-data">
-        @if(weatherDataInput.main.temp > 22) {
-            <img src="../../../../../assets/Sun.jpg" alt="">
+        @if(weatherDataInput.main.temp > 5 && weatherDataInput.main.temp <= 15) {
+          <img src="../../../../../assets/cold_1.jpeg" alt="">
         }
-        @if(weatherDataInput.main.temp <= 20) {
-            <img src="../../../../../assets/Cold.jpg" alt="">
+        @if(weatherDataInput.main.temp > 15 && weatherDataInput.main.temp <= 25) {
+          <img src="../../../../../assets/cold_2.jpeg" alt="">
+        }
+        @if(weatherDataInput.main.temp > 25 && weatherDataInput.main.temp <= 30) {
+            <img src="../../../../../assets/sun_1.jpeg" alt="">
+        }
+        @if(weatherDataInput.main.temp >= 35) {
+            <img src="../../../../../assets/sun_2.jpg" alt="">
         }
         <div class="weather-data">
             <div class="location">{{ weatherDataInput.name }}</div>
+            <br>
             <div class="temperature">
               {{ weatherDataInput.main.temp | number : "1.0-0" }}ºC
             </div>
