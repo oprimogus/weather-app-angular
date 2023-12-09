@@ -1,14 +1,14 @@
 import { type Routes } from '@angular/router'
-import { WheaterHomeComponent } from './modules/weather/pages/weather-home/weather-home.component'
+import { WeatherHomeComponent } from './modules/weather/pages/weather-home/weather-home.component'
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'wheater',
+    redirectTo: 'weather',
     pathMatch: 'full'
   },
   {
-    path: 'wheather',
-    component: WheaterHomeComponent
+    path: 'weather',
+    component: WeatherHomeComponent
   }
 ]
